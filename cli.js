@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 var addStream = require('add-stream');
+var chalk = require('chalk');
 var standardChangelog = require('./');
 var fs = require('fs');
 var meow = require('meow');
@@ -30,6 +31,7 @@ var cli = meow({
 }, {
   alias: {
     i: 'infile',
+    h: 'help',
     o: 'outfile',
     w: 'overwrite',
     p: 'preset',
@@ -38,26 +40,19 @@ var cli = meow({
     r: 'releaseCount',
     v: 'verbose',
     c: 'context'
+  },
+  default: {
+    i: 'CHANGELOG.md',
+    w: true
   }
 });
 
 var flags = cli.flags;
 var infile = flags.infile;
-var outfile = flags.outfile;
+var outfile = flags.outfile || infile;
 var overwrite = flags.overwrite;
 var append = flags.append;
 var releaseCount = flags.releaseCount;
-
-if (infile && infile === outfile) {
-  overwrite = true;
-} else if (overwrite) {
-  if (infile) {
-    outfile = infile;
-  } else {
-    console.error('Nothing to overwrite');
-    process.exit(1);
-  }
-}
 
 var options = _.omit({
   preset: flags.preset,
@@ -73,7 +68,6 @@ if (flags.verbose) {
 }
 
 var templateContext;
-
 var outStream;
 
 try {
@@ -105,6 +99,18 @@ function noInputFile() {
   changelogStream
     .pipe(outStream);
 }
+
+// creqate CHANGELOG.md if it's missing.
+(function createIfMissing(infile) {
+  try {
+    fs.accessSync(infile, fs.F_OK);
+  } catch (err) {
+    if (err.code === 'ENOENT') {
+      console.log(chalk.green('\tcreating ') + infile);
+      fs.writeFileSync(infile, '', 'utf-8');
+    }
+  }
+})(infile);
 
 if (infile && releaseCount !== 0) {
   var readStream = fs.createReadStream(infile)
