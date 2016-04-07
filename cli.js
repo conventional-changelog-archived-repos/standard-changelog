@@ -9,7 +9,7 @@ var tempfile = require('tempfile');
 var _ = require('lodash');
 var resolve = require('path').resolve;
 var Readable = require('stream').Readable;
-var rimraf = require('rimraf')
+var rimraf = require('rimraf');
 
 var cli = meow({
   help: [
@@ -124,7 +124,7 @@ if (options.append) {
         .pipe(fs.createWriteStream(outfile))
         .on('finish', function() {
           standardChangelog.checkpoint('output changes to %s', [outfile]);
-          rimraf.sync(tmp)
+          rimraf.sync(tmp);
         });
     });
 }
