@@ -293,4 +293,15 @@ describe('cli', function() {
       done();
     });
   });
+
+  it('outputs an error if context file is not found', function(done) {
+    var cp = spawn(cliPath, ['--context', 'missing-file.txt'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.stderr.on('data', function(data) {
+      data.toString().should.match(/Cannot find module/);
+      return done();
+    });
+  });
 });
