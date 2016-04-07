@@ -1,7 +1,24 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
+# Standard CHANGELOG
 
-> Generate a changelog from git metadata with [angular commit convention](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md)
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coveralls-image]][coveralls-url]
 
+> An opinionated approach to package publishing and CHANGELOG generation, using the workflow outlined in [conventional-changelog-cli](https://github.com/conventional-changelog/conventional-changelog-cli)
+
+_how does it work?_
+
+1. when you land commits on your `master` branch, select the _Squash and Merge_ option.
+2. add a title and body that follows the [conventional-changelog conventions](https://github.com/stevemao/conventional-changelog-angular/blob/master/convention.md).
+3. when you're ready to release to npm:
+  1. checkout `master`.
+  2. run `standard-changelog`.
+  3. ~~push and publish: `git push --tags; git push origin master; npm publish`.~~
+
+_`standard-changelog` handles the following:_
+
+1. ~~bumping the version in package.json.~~
+2. generating an updated CHANGELOG.md.
+3. ~~commiting your _package.json_ and _CHANGELOG.md_.~~
+4. ~~tagging a new release.~~
 
 ## Quick start
 
@@ -11,19 +28,32 @@ $ cd my-project
 $ standard-changelog
 ```
 
-The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
-
-If you first time use this tool and want to generate all previous changelog, you can run:
+_or_
 
 ```sh
-$ standard-changelog -r 0
+$ npm install standard-changelog --save-dev
+$ cd my-project
+```
+
+_add the following to your **package.json**_
+
+```json
+{
+  "script": {
+    "release": "standard-changelog"
+  }
+}
+```
+
+The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
+
+If you're using this tool for the first time and want to generate new content in CHANGELOG.md, you can run:
+
+```sh
+$ standard-changelog --first-release
 ```
 
 All available command line parameters can be listed using [CLI](#cli) : `standard-changelog --help`.
-
-**Hint:** You can alias your command or add it to your package.json. EG: `"changelog": "standard-changelog"`.
-
-## [Recommended workflow](https://github.com/conventional-changelog/conventional-changelog-cli#recommended-workflow)
 
 ## Programmatic usage
 

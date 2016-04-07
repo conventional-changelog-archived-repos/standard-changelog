@@ -277,4 +277,20 @@ describe('cli', function() {
       done();
     });
   });
+
+  it('generates full historical changelog on --first-release', function(done) {
+    shell.exec('git tag -a v0.0.17 -m "old release"');
+
+    var cp = spawn(cliPath, ['-k', __dirname + '/fixtures/_package.json', '--first-release'], {
+      stdio: [process.stdin, null, null]
+    });
+
+    cp.on('close', function(code) {
+      expect(code).to.equal(0);
+      var modified = readFileSync('CHANGELOG.md', 'utf8');
+      expect(modified).to.include('First commit');
+      shell.exec('git tag -d v0.0.17');
+      done();
+    });
+  });
 });
