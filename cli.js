@@ -20,7 +20,7 @@ var cli = meow({
     '  -i, --infile              Read the CHANGELOG from this file',
     '  -f, --first-release       Generate the CHANGELOG for the first time',
     '  -o, --outfile             Write the CHANGELOG to this file. If unspecified (default: CHANGELOG.md)',
-    '  -w, --overwrite           Overwrite the infile (default: true)',
+    '  -s, --same-file           Overwrite the infile (default: true)',
     '  -p, --preset              Name of the preset you want to use (default: angular)',
     '  -k, --pkg                 A filepath of where your package.json is located',
     '  -a, --append              Should the generated block be appended',
@@ -33,7 +33,7 @@ var cli = meow({
     i: 'infile',
     h: 'help',
     o: 'outfile',
-    w: 'overwrite',
+    s: 'same-file',
     p: 'preset',
     k: 'pkg',
     a: 'append',
@@ -44,14 +44,14 @@ var cli = meow({
   },
   default: {
     i: 'CHANGELOG.md',
-    w: true
+    s: true
   }
 });
 
 var flags = cli.flags;
 var infile = flags.infile;
-var overwrite = flags.overwrite;
-var outfile = overwrite ? (flags.outfile || infile) : flags.outfile;
+var sameFile = flags.sameFile;
+var outfile = sameFile ? (flags.outfile || infile) : flags.outfile;
 var append = flags.append;
 var releaseCount = flags.firstRelease ? 0 : flags.releaseCount;
 

@@ -64,8 +64,8 @@ describe('cli', function() {
     });
   });
 
-  it('should overwrite if `-w` presents when appending', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-w', '--append'], {
+  it('should overwrite if `-s` presents when appending', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-s', '--append'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -79,8 +79,8 @@ describe('cli', function() {
     });
   });
 
-  it('should overwrite if `-w` presents when not appending', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-w'], {
+  it('should overwrite if `-s` presents when not appending', function(done) {
+    var cp = spawn(cliPath, ['-i', __dirname + '/fixtures/_CHANGELOG.md', '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -117,9 +117,9 @@ describe('cli', function() {
 
     cp.on('close', function(code) {
       expect(code).to.equal(0);
+
       var modified = readFileSync(__dirname + '/../tmp/_CHANGELOG.md', 'utf8');
       expect(modified).to.include('First commit');
-
       done();
     });
   });
@@ -210,7 +210,7 @@ describe('cli', function() {
   });
 
   it('should create `infile` if `infile` is ENOENT and overwrite infile', function(done) {
-    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-w'], {
+    var cp = spawn(cliPath, ['-i', __dirname + '/../tmp/no-such-file.md', '-s'], {
       stdio: [process.stdin, null, null]
     });
 
@@ -225,8 +225,8 @@ describe('cli', function() {
     });
   });
 
-  it('should default to CHANGELOG.md if `-w` presents but `-i` is missing', function(done) {
-    var cp = spawn(cliPath, ['-w'], {
+  it('should default to CHANGELOG.md if `-s` presents but `-i` is missing', function(done) {
+    var cp = spawn(cliPath, ['-s'], {
       stdio: [process.stdin, null, null]
     });
 

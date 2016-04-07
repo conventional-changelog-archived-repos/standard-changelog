@@ -2,6 +2,7 @@
 var conventionalChangelogCore = require('conventional-changelog-core');
 var angular = require('conventional-changelog-angular');
 var fs = require('fs');
+var accessSync = require('fs-access').sync;
 var chalk = require('chalk');
 var figures = require('figures');
 var sprintf = require('sprintf');
@@ -14,11 +15,11 @@ function conventionalChangelog(options, context, gitRawCommitsOpts, parserOpts, 
 
 conventionalChangelog.createIfMissing = function(infile) {
   try {
-    fs.accessSync(infile, fs.F_OK);
+    accessSync(infile, fs.F_OK);
   } catch (err) {
     if (err.code === 'ENOENT') {
       conventionalChangelog.checkpoint('created %s', [infile]);
-      fs.writeFileSync(infile, '', 'utf-8');
+      fs.writeFileSync(infile, '\n', 'utf-8');
     }
   }
 };
