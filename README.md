@@ -20,7 +20,7 @@ _`standard-changelog` handles the following:_
 3. ~~commiting your _package.json_ and _CHANGELOG.md_.~~
 4. ~~tagging a new release.~~
 
-## Quick start
+## Quick Start
 
 ```sh
 $ npm install -g standard-changelog
@@ -47,7 +47,7 @@ _add the following to your **package.json:**_
 
 The above generates a changelog based on commits since the last semver tag that match the pattern of a "Feature", "Fix", "Performance Improvement" or "Breaking Changes".
 
-_Cutting your first release:_
+**your first release:**
 
 If you're using this tool for the first time and want to generate new content in CHANGELOG.md, you can run:
 
@@ -55,11 +55,11 @@ If you're using this tool for the first time and want to generate new content in
 $ standard-changelog --first-release
 ```
 
-_advanced topics:_
+**advanced topics:**
 
 All available command line parameters can be listed using [CLI](#cli) : `standard-changelog --help`.
 
-## Programmatic usage
+## Programmatic Usage
 
 ```sh
 $ npm install --save standard-changelog
